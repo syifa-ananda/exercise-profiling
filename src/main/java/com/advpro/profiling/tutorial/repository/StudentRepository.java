@@ -4,6 +4,7 @@ import com.advpro.profiling.tutorial.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
+import java.util.Optional;
 
 /**
  * @author muhammad.khadafi
@@ -13,4 +14,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "SELECT STRING_AGG(name, ', ') FROM students", nativeQuery = true)
     String joinStudentNamesAggregate();
+
+    @Query("SELECT s FROM Student s ORDER BY s.gpa DESC LIMIT 1")
+    Optional<Student> findStudentWithHighestGpa();
 }
